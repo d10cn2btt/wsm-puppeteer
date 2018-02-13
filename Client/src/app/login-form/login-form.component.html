@@ -1,0 +1,17 @@
+<!-- Here we are declaring a local variable called “form” and setting it to an instance of ngForm.
+This is very important. Now our local form variable becomes of type FormGroup allowing us access to the FormGroup API’s on this local variable.
+We use this in the ngSubmit event where we send the value of the form via form.value -->
+<form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+    <div class="form-group" [ngClass]="{'has-error': checkError('email', 'email')}">
+        <label for="email_wsm">Email WSM</label>
+        <input type="email" class="form-control" id="email_wsm" placeholder="Email WSM" [formControl]="loginForm.controls['email']">
+        <span *ngIf="checkError('email', 'email')" class="help-block">You must add an email.</span>
+    </div>
+    <div class="form-group" [ngClass]="{'has-error': checkError('password', 'minlength')}">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" [formControl]="loginForm.controls['password']">
+        <span *ngIf="checkError('password', 'minlength')" class="help-block">Min length 6.</span>
+    </div>
+    <div class="checkbox"><label><input type="checkbox"> Remember me</label></div>
+    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+</form>
