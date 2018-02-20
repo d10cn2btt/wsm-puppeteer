@@ -5,8 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "serve-ext": "ng serve -dop=false",
     "build": "ng build --prod",
-    "build-extension": "ng build -prod -dop=false",
+    "build-ext": "ng build -prod -dop=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,7 +23,9 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
+    "ngx-bootstrap": "^2.0.2",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

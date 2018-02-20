@@ -7,21 +7,31 @@ import {catchError} from "rxjs/operators/catchError";
 import {tap} from "rxjs/operators/tap";
 
 const httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+    })
 };
 
 @Injectable()
 export class LoginService {
-    private URL_LOGIN = 'https://jsonplaceholder.typicode.com/posts';
+    // private DOMAIN = 'https://test-puppeteer-d10cn2btt.c9users.io:8080/';
+    private DOMAIN = 'http://127.0.0.1:3000/';
+    private URL_CHECK_DATE = this.DOMAIN + 'check_il_le';
+    // private URL_CHECK_DATE = 'https://jsonplaceholder.typicode.com/posts';
 
     constructor(private http: HttpClient) {
     }
 
     performLogin(formData: string) {
-        return this.http.post(this.URL_LOGIN, formData, httpOptions).pipe(
+        console.log(formData);
+        return this.http.post(this.URL_CHECK_DATE, formData, httpOptions).pipe(
             tap(response => response),
             catchError(this.handleError('abc', []))
         );
+        // return this.http.get(this.DOMAIN + 'hehe', httpOptions).pipe(
+        //     tap(response => response),
+        //     catchError(this.handleError('abc', []))
+        // );
     }
 
     /**
