@@ -6,7 +6,7 @@ const URL_FORM_REQUEST = DOMAIN + '/vi/dashboard/users/598/request_leaves/new';
 const URL_LIST_FORM = DOMAIN + '/vi/dashboard/users/598/request_leaves';
 
 const STATUS_OK = 200;
-const STATUS_ERROR = 400;
+const STATUS_ERROR = 401;
 
 let browser = "";
 let statusCode = STATUS_OK;

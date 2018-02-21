@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginFormComponent} from './login-form/login-form.component';
 import {LoginService} from './service/login.service';
+import {MessageService} from './service/message.service';
 import {ListDateComponent} from './list-date/list-date.component';
 import {PageNotFoundComponent} from './not-found.component';
 import {LoadingComponent} from './loading/loading.component';
@@ -33,7 +34,7 @@ import {PopupComponent} from './popup/popup.component';
         AppRoutingModule,
         ModalModule.forRoot(),
     ],
-    providers: [LoginService],
+    providers: [LoginService, MessageService],
     bootstrap: [AppComponent],
     entryComponents: [
         PopupComponent

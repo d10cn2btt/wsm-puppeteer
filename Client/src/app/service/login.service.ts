@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
 import {catchError} from "rxjs/operators/catchError";
 import {tap} from "rxjs/operators/tap";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorObservable} from "rxjs/observable/ErrorObservable";
+import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
+import {PopupComponent} from "../popup/popup.component";
+import {MessageService} from "./message.service";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -16,39 +19,34 @@ const httpOptions = {
 export class LoginService {
     // private DOMAIN = 'https://test-puppeteer-d10cn2btt.c9users.io:8080/';
     private DOMAIN = 'http://127.0.0.1:3000/';
-    private URL_CHECK_DATE = this.DOMAIN + 'check_il_le';
+    private URL_CHECK_DATE = this.DOMAIN + 'take_IL1';
     // private URL_CHECK_DATE = 'https://jsonplaceholder.typicode.com/posts';
+    bsModalRef: BsModalRef;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, public messageService: MessageService) {
     }
 
     performLogin(formData: string) {
-        console.log(formData);
+        // this.openModalWithComponent(['xvzxcv']);
+        // return this.http.post(this.URL_CHECK_DATE, formData, httpOptions).map(response => response);
         return this.http.post(this.URL_CHECK_DATE, formData, httpOptions).pipe(
-            tap(response => response),
-            catchError(this.handleError('abc', []))
+            tap( // Log the result or error
+                data => data,
+                error => this.messageService.openModalWithComponent(error.message)
+            ),
+            catchError(this.handleError)
         );
-        // return this.http.get(this.DOMAIN + 'hehe', httpOptions).pipe(
-        //     tap(response => response),
-        //     catchError(this.handleError('abc', []))
-        // );
     }
 
-    /**
-     * Handle Http operation that failed.
-     * Let the app continue.
-     * @param operation - name of the operation that failed
-     * @param result - optional value to return as the observable result
-     */
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
-
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
-        };
+    handleError(error: HttpErrorResponse) {
+        // this.openModalWithComponent(['zxcvzxcv']);
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.error(
+            `Backend returned code ${error.status}, ` +
+            `body was: ${error.error}`);
+        // return an ErrorObservable with a user-facing error message
+        return new ErrorObservable(
+            'Something bad happened; please try again later.');
     }
-
 }

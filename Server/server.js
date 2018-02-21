@@ -9,7 +9,7 @@ let wsm = require('./wsm');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -31,9 +31,9 @@ app.post('/submit_form_request', async function (req, res) {
 
 app.post('/take_IL1', function (req, res) {
     console.log(req);
-    res.json({
-        'acvvbc': 123,
-        'def': 222,
+    res.status(200).json({
+        "day_IL": ['2017-02-13 07:50', '2017-02-21 08:50', '2017-02-23 08:50'],
+        "day_LE": ['2017-02-03 15:40', '2017-02-08 14:40'],
     });
 });
 
