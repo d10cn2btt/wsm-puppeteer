@@ -7,7 +7,7 @@ import {PageNotFoundComponent} from './not-found.component';
 import {LoadingComponent} from './loading/loading.component';
 
 const appRoutes: Routes = [
-    {path: '', component: ListDateComponent},
+    {path: '', component: LoginFormComponent},
     {path: 'login', component: LoginFormComponent},
     {path: 'list-date', component: ListDateComponent},
     {path: '**', component: PageNotFoundComponent},

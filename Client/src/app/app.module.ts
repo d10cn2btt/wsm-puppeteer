@@ -4,6 +4,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ModalModule} from 'ngx-bootstrap';
+import {TabsModule} from 'ngx-bootstrap';
+import {BsDropdownModule} from 'ngx-bootstrap';
 
 import {AppRoutingModule} from './app-routing.module';
 
@@ -32,7 +34,10 @@ import {PopupComponent} from './popup/popup.component';
         HttpClientModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+
         ModalModule.forRoot(),
+        TabsModule.forRoot(),
+        BsDropdownModule.forRoot(),
     ],
     providers: [LoginService, MessageService],
     bootstrap: [AppComponent],

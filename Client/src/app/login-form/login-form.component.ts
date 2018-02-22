@@ -13,6 +13,7 @@ import {LoginService} from '../service/login.service';
     styleUrls: ['./login-form.component.scss'],
     animations: [slideInDownAnimation],
 })
+
 export class LoginFormComponent implements OnInit {
     @HostBinding('@flyInOut') flyInOut = true;
     @HostBinding('style.display') display = 'block';

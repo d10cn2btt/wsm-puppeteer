@@ -1,3 +1,30 @@
-<p>
-  list-date works!
-</p>
+<tabset>
+    <tab heading="Day IL" id="list_IL" (select)="changeTab(TYPE_REQUEST_IL)">
+        <ul class="list-group">
+            <li class="list-group-item"
+                [ngClass]="{'active': il == currentDate}"
+                *ngFor="let il of listDate.day_IL; let i = index" (click)="selectDate(il)">
+                {{il}}
+            </li>
+        </ul>
+    </tab>
+    <tab heading="Day LE" id="list_LE" (select)="changeTab(TYPE_REQUEST_LE)">
+        <ul class="list-group">
+            <li class="list-group-item"
+                [ngClass]="{'active': le == currentDate}"
+                *ngFor="let le of listDate.day_LE; let i = index" (click)="selectDate(le)">
+                {{le}}
+            </li>
+        </ul>
+    </tab>
+</tabset>
+
+<label class="radio-inline"><input [value]="1" [(ngModel)]="isRandomReason" checked type="radio" name="reason_il">Random Reason</label>
+<label class="radio-inline"><input [value]="0" [(ngModel)]="isRandomReason" type="radio" name="reason_il">Custom Reason</label>
+
+<select class="form-control" (change)="selectReason($event.target.value)" *ngIf="isRandomReason">
+    <option value="">- Select Reason -</option>
+    <option *ngFor="let reason of reasonSelect" value="{{reason}}" [selected]="currentReason == reason">{{reason}}</option>
+</select>
+
+<textarea [(ngModel)]="reasonTxt" cols="30" rows="5" class="form-control" *ngIf="!isRandomReason"></textarea>
