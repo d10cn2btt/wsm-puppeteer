@@ -83,7 +83,7 @@ module.exports.submitFormRequest = async function (req) {
 
         await page.goto(URL_FORM_REQUEST);
         await page.waitFor(500);
-        await page.type('#request_leave_checkin_morning', "2018-02-22 09:09");
+        await page.type('#request_leave_checkin_morning', params.date);
         await page.waitFor(500);
         await page.type('#new_request_leave textarea', params.reason);
         await page.waitFor(500);

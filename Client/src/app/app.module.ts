@@ -11,7 +11,7 @@ import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
 import {LoginFormComponent} from './login-form/login-form.component';
-import {LoginService} from './service/login.service';
+import {ApiService} from './service/api.service';
 import {MessageService} from './service/message.service';
 import {ListDateComponent} from './list-date/list-date.component';
 import {PageNotFoundComponent} from './not-found.component';
@@ -39,7 +39,7 @@ import {PopupComponent} from './popup/popup.component';
         TabsModule.forRoot(),
         BsDropdownModule.forRoot(),
     ],
-    providers: [LoginService, MessageService],
+    providers: [ApiService, MessageService],
     bootstrap: [AppComponent],
     entryComponents: [
         PopupComponent

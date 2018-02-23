@@ -1,5 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 
+import {MessageService} from "../service/message.service";
+import {ApiService} from "../service/api.service";
+
 @Component({
     selector: 'list-date',
     templateUrl: './list-date.component.html',
@@ -13,9 +16,14 @@ export class ListDateComponent implements OnInit {
         day_IL: "",
         day_LE: "",
     };
+
+    @Input() userInfo = {
+        email: "",
+        password: "",
+    };
     currentDate = "";
     currentReason = "";
-    typeRequest = "";
+    typeRequest = this.TYPE_REQUEST_IL;
     reasonTxt = "";
     listReason = {
         "IL": [
@@ -37,7 +45,13 @@ export class ListDateComponent implements OnInit {
     reasonSelect = this.listReason.IL;
     isRandomReason = 1;
 
+    constructor(public messageService: MessageService, public apiService: ApiService) {
+    }
+
     ngOnInit() {
+        if (this.listDate.day_IL == "" && this.listDate.day_LE == "") {
+            this.messageService.openModalWithComponent(["You worked very hard !"], "Congratulation");
+        }
     }
 
     selectDate(date, type) {
@@ -56,5 +70,30 @@ export class ListDateComponent implements OnInit {
         if (tab == this.TYPE_REQUEST_LE) {
             this.reasonSelect = this.listReason.LE
         }
+    }
+
+    submitRequest() {
+        if (this.currentDate == "") {
+            this.messageService.openModalWithComponent(["Please select date"], "Submit Request");
+            return false;
+        }
+
+        if (!this.isRandomReason && this.reasonTxt == "") {
+            this.messageService.openModalWithComponent(["Please write reason"], "Submit Request");
+            return false;
+        }
+
+        let randomReason = Math.floor((Math.random() * this.reasonSelect.length));
+        let formData = {
+            "reason": this.isRandomReason ? this.reasonSelect[randomReason] : this.reasonTxt,
+            "date": this.currentDate,
+            "type_request": this.typeRequest,
+            "email": this.userInfo.email,
+            "password": this.userInfo.password,
+        };
+
+        this.apiService.submitRequest(formData).subscribe(response => {
+            console.log(response);
+        });
     }
 }

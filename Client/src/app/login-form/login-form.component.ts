@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import {slideInDownAnimation} from '../animations';
-import {LoginService} from '../service/login.service';
+import {ApiService} from '../service/api.service';
 
 @Component({
     selector: 'login-form',
@@ -21,24 +21,24 @@ export class LoginFormComponent implements OnInit {
     bsModalRef: BsModalRef;
     loginForm: FormGroup;
     listDate: Object;
+    userInfo: Object;
 
-    constructor(fb: FormBuilder, private loginService: LoginService, private router: Router) {
+    constructor(fb: FormBuilder, private apiService: ApiService, private router: Router) {
         this.loginForm = fb.group({
             'email': ["", Validators.email],
             'password': ["", Validators.minLength(6)],
         });
-
-        this.submitForm({'email': "zxcvzxcv@zxcvzxcvzzxcvzxcv", 'password': "zxcvzxcvzxcv"})
+        this.submitForm({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
     }
 
     ngOnInit() {
     }
 
     submitForm(value: any) {
-        console.log(value);
-        // this.router.navigate([{outlets: {loading: 'compose'}}]);
-        this.loginService.performLogin(value).subscribe(response => {
+        this.router.navigate([{outlets: {loading: 'compose'}}]);
+        this.apiService.performLogin(value).subscribe(response => {
             this.listDate = response;
+            this.userInfo = value;
             this.router.navigate([{outlets: {loading: null}}]);
         });
     }

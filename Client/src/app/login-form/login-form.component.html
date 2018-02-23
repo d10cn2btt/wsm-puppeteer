@@ -16,4 +16,4 @@ We use this in the ngSubmit event where we send the value of the form via form.v
     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
 </form>
 
-<list-date [listDate]="listDate" *ngIf="listDate"></list-date>
+<list-date [listDate]="listDate" [userInfo]="userInfo" *ngIf="listDate"></list-date>

@@ -30,10 +30,10 @@ app.post('/submit_form_request', async function (req, res) {
 });
 
 app.post('/take_IL1', function (req, res) {
-    console.log(req);
+    console.log(req.body);
     res.status(200).json({
-        "day_IL": ['2017-02-13 07:50', '2017-02-21 08:50', '2017-02-23 08:50'],
-        "day_LE": ['2017-02-03 15:40', '2017-02-08 14:40'],
+        "day_IL": ['2018-02-23 07:50', '2018-02-21 08:50', '2018-02-23 08:50'],
+        "day_LE": ['2018-02-03 15:40', '2018-02-08 14:40'],
     });
 });
 
