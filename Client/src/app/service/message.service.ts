@@ -21,7 +21,8 @@ export class MessageService {
         this.messages = [];
     }
 
-    openModalWithComponent(content: Array<Object>, title = 'asdfasdf') {
+    openModalWithComponent(content: Array<Object>, title = 'Error') {
+        console.log(content[0]);
         let initialState = {
             list: content,
             title: title,
