@@ -6,7 +6,9 @@
 </div>
 <div class="modal-body">
     <ul *ngIf="list.length">
-        <li *ngFor="let item of list">{{item}}</li>
+        <li *ngFor="let item of list">
+            <p [innerHTML]="item"></p>
+        </li>
     </ul>
 </div>
 <!--<div class="modal-footer">-->

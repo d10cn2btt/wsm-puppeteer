@@ -21,8 +21,8 @@ export class MessageService {
         this.messages = [];
     }
 
-    openModalWithComponent(content: Array<Object>, title = 'Error') {
-        console.log(content[0]);
+    openModalWithComponent(content: Array<String>, title = 'Error') {
+        content[0] = content[0].replace(/(?:\r\n|\r|\n)/g, '<br />');
         let initialState = {
             list: content,
             title: title,

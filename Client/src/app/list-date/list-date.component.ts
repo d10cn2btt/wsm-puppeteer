@@ -13,8 +13,8 @@ export class ListDateComponent implements OnInit {
     TYPE_REQUEST_LE = 14;
 
     @Input() listDate = {
-        day_IL: "",
-        day_LE: "",
+        day_IL: [],
+        day_LE: [],
     };
 
     @Input() userInfo = {
@@ -49,9 +49,9 @@ export class ListDateComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.listDate.day_IL == "" && this.listDate.day_LE == "") {
-            this.messageService.openModalWithComponent(["You worked very hard !"], "Congratulation");
-        }
+        // if (this.listDate.day_IL == "" && this.listDate.day_LE == "") {
+        //     this.messageService.openModalWithComponent(["You worked very hard !"], "Congratulation");
+        // }
     }
 
     selectDate(date, type) {
@@ -92,8 +92,16 @@ export class ListDateComponent implements OnInit {
             "password": this.userInfo.password,
         };
 
-        this.apiService.submitRequest(formData).subscribe(response => {
-            console.log(response);
+        this.apiService.submitRequest(formData).subscribe((response: any) => {
+            this.messageService.openModalWithComponent([
+                "Check request  <a href='" + response.url_edit + "'>here</a>"
+            ], "Submit request successfully");
+
+            if (this.typeRequest == this.TYPE_REQUEST_IL) {
+                this.listDate.day_IL = this.listDate.day_IL.filter(e => e != this.currentDate);
+            } else {
+                this.listDate.day_LE = this.listDate.day_LE.filter(e => e != this.currentDate);
+            }
         });
     }
 }

@@ -12,28 +12,23 @@ const TYPE_REQUEST_IL = 1;
 const TYPE_REQUEST_LE = 14;
 
 let browser = "";
-let statusCode = STATUS_OK;
-let resContent = {};
 
 module.exports.checkDate = async function (email, password) {
+    let resContent = {};
+    let statusCode = STATUS_OK;
     try {
         let page = await loginWSM(email, password);
-        resContent.check_date = await page.evaluate(() => {
-            let dayIL = [];
-            let dayLE = [];
-            document.querySelectorAll(".calendar-content .calendar-content .brg-red.event-in").forEach(function (day) {
-                dayIL.push(day.closest('td').getAttribute('class') + ' ' + day.innerText);
-            });
+        let thisMonth = await detechDate(page);
 
-            document.querySelectorAll(".calendar-content .calendar-content .brg-red.event-out").forEach(function (day) {
-                dayLE.push(day.closest('td').getAttribute('class') + ' ' + day.innerText);
-            });
+        // await page.click("#prev");
+        // await page.waitFor(5000);
+        //
+        // let lastMonth = await detechDate(page);
 
-            return {
-                "day_IL": dayIL,
-                "day_LE": dayLE,
-            };
-        });
+        resContent = {
+            "day_IL": thisMonth.day_IL,
+            "day_LE": thisMonth.day_LE,
+        };
 
         // const promises = [];
         // for (let i = 0; i < dateResponse.length; i++) {
@@ -55,6 +50,25 @@ module.exports.checkDate = async function (email, password) {
     }
 };
 
+async function detechDate(page) {
+    return await page.evaluate(() => {
+        let dayIL = [];
+        let dayLE = [];
+        document.querySelectorAll(".calendar-content .calendar-content .brg-red.event-in").forEach(function (day) {
+            dayIL.push(day.closest('td').getAttribute('class') + ' ' + day.innerText);
+        });
+
+        document.querySelectorAll(".calendar-content .calendar-content .brg-red.event-out").forEach(function (day) {
+            dayLE.push(day.closest('td').getAttribute('class') + ' ' + day.innerText);
+        });
+
+        return {
+            "day_IL": dayIL,
+            "day_LE": dayLE,
+        };
+    });
+}
+
 async function loginWSM(email, password) {
     browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
@@ -70,6 +84,7 @@ async function loginWSM(email, password) {
     await page.waitFor(500);
 
     await page.click('#devise-login-form .login-success');
+
     // check authentication
     await page.waitForSelector('.curr tbody tr', {timeout: 10000}).catch(async function (e) {
         throw new Error("Login fail");
@@ -80,6 +95,8 @@ async function loginWSM(email, password) {
 }
 
 module.exports.submitFormRequest = async function (req) {
+    let resContent = {};
+    let statusCode = STATUS_OK;
     try {
         let params = req.body;
         let page = await loginWSM(params.email, params.password);
@@ -104,8 +121,10 @@ module.exports.submitFormRequest = async function (req) {
                 return await page.evaluate(() => {
                     return document.querySelector('.showSweetAlert p').innerText;
                 });
-            }).catch(async function (e) { return true; });
-        
+            }).catch(async function (e) {
+                return true;
+            });
+
         if (typeof timeInvalid == "string") {
             throw new Error(timeInvalid);
         }
@@ -117,19 +136,26 @@ module.exports.submitFormRequest = async function (req) {
         // wait until page loaded
         await page.waitForNavigation();
 
-        resContent.url_edit = await page.waitForSelector('#request_leave_search', {timeout: 2000})
+        let url_edit = await page.waitForSelector('#request_leave_search', {timeout: 2000})
             .then(async function (e) {
-                return await page.evaluate(() => {
-                    return DOMAIN + document.querySelector(".list-request-leaves tr:nth-child(1) td:last-child a.btn-warning").getAttribute('href');
-                });
+                return Promise.resolve(await page.evaluate(() => {
+                    return document.querySelector(".list-request-leaves tr:nth-child(1) td:last-child a.btn-warning").getAttribute('href');
+                }));
             })
             .catch(async function (e) {
                 const errorSubmitForm = await page.evaluate(() => {
-                    return document.querySelector('#error_explanation ul').innerText;
+                    let ulError = document.querySelector('#error_explanation ul');
+                    let messError = "Error when create request. Please try again after few minutes !";
+                    if (ulError !== null) {
+                        messError = ulError.innerText;
+                    }
+
+                    return messError;
                 });
                 throw new Error(errorSubmitForm);
             });
 
+        resContent.url_edit = DOMAIN + url_edit;
         resContent.url_list = URL_LIST_FORM;
 
     } catch (error) {

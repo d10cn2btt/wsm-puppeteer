@@ -1,7 +1,6 @@
 import {Component, OnInit, HostBinding} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {trigger, state, style, animate, transition} from '@angular/animations';
-import {Router} from '@angular/router';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import {slideInDownAnimation} from '../animations';
@@ -23,23 +22,21 @@ export class LoginFormComponent implements OnInit {
     listDate: Object;
     userInfo: Object;
 
-    constructor(fb: FormBuilder, private apiService: ApiService, private router: Router) {
+    constructor(fb: FormBuilder, private apiService: ApiService) {
         this.loginForm = fb.group({
             'email': ["", Validators.email],
             'password': ["", Validators.minLength(6)],
         });
-        this.submitForm({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
+        this.performLogin({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
     }
 
     ngOnInit() {
     }
 
-    submitForm(value: any) {
-        this.router.navigate([{outlets: {loading: 'compose'}}]);
+    performLogin(value: any) {
         this.apiService.performLogin(value).subscribe(response => {
             this.listDate = response;
             this.userInfo = value;
-            this.router.navigate([{outlets: {loading: null}}]);
         });
     }
 
