@@ -2,6 +2,7 @@ import {Component, OnInit, HostBinding} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {Router} from '@angular/router';
 
 import {slideInDownAnimation} from '../animations';
 import {ApiService} from '../service/api.service';
@@ -22,12 +23,12 @@ export class LoginFormComponent implements OnInit {
     listDate: Object;
     userInfo: Object;
 
-    constructor(fb: FormBuilder, private apiService: ApiService) {
+    constructor(fb: FormBuilder, private apiService: ApiService, public router: Router) {
         this.loginForm = fb.group({
             'email': ["", Validators.email],
             'password': ["", Validators.minLength(6)],
         });
-        this.performLogin({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
+        // this.performLogin({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
     }
 
     ngOnInit() {
@@ -42,6 +43,11 @@ export class LoginFormComponent implements OnInit {
 
     checkError(field: string, errorCode: string) {
         return this.loginForm.controls[field].hasError(errorCode) && this.loginForm.controls[field].touched;
+    }
+
+    batoutput() {
+        this.listDate = "";
+        this.router.navigate(['/']);
     }
 
 }

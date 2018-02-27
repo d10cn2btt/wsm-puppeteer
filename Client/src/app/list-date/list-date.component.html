@@ -29,4 +29,10 @@
 
 <textarea [(ngModel)]="reasonTxt" cols="30" rows="5" class="form-control" *ngIf="!isRandomReason"></textarea>
 
+<label class="radio-inline pdL00 mgT15">Compensation time</label>
+<select class="form-control" [(ngModel)]="currentCompensation">
+    <option *ngFor="let date of listCompensation" value="{{date}}">{{date}}</option>
+</select>
+
 <button class="btn btn-primary col-xs-12 mgT15" (click)="submitRequest()" [disabled]="currentDate == ''">Submit Request</button>
+<button class="btn btn-primary col-xs-12 mgT15" (click)="testoutput()">Logout</button>

@@ -1,16 +1,24 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, HostBinding} from '@angular/core';
+import * as moment from 'moment';
 
 import {MessageService} from "../service/message.service";
 import {ApiService} from "../service/api.service";
+import {slideInDownAnimation} from '../animations';
 
 @Component({
     selector: 'list-date',
     templateUrl: './list-date.component.html',
-    styleUrls: ['./list-date.component.scss']
+    styleUrls: ['./list-date.component.scss'],
+    animations: [slideInDownAnimation],
 })
 export class ListDateComponent implements OnInit {
+    @HostBinding('@flyInOut') flyInOut = true;
+    @HostBinding('style.display') display = 'block';
+
     TYPE_REQUEST_IL = 1;
     TYPE_REQUEST_LE = 14;
+
+    @Output() myEvent = new EventEmitter();
 
     @Input() listDate = {
         day_IL: [],
@@ -44,8 +52,16 @@ export class ListDateComponent implements OnInit {
     };
     reasonSelect = this.listReason.IL;
     isRandomReason = 1;
+    rangeCompensation = 3;
+    listCompensation = [];
+    currentCompensation = "";
 
     constructor(public messageService: MessageService, public apiService: ApiService) {
+        for (let i = 0; i < this.rangeCompensation; i++) {
+            this.listCompensation.push(moment().add(i, "days").format('YYYY-MM-DD'));
+        }
+
+        this.currentCompensation = this.listCompensation[0];
     }
 
     ngOnInit() {
@@ -89,6 +105,7 @@ export class ListDateComponent implements OnInit {
             "date": this.currentDate,
             "type_request": this.typeRequest,
             "email": this.userInfo.email,
+            "compensation_date": this.currentCompensation + " 16:45:00",
             "password": this.userInfo.password,
         };
 
@@ -103,5 +120,10 @@ export class ListDateComponent implements OnInit {
                 this.listDate.day_LE = this.listDate.day_LE.filter(e => e != this.currentDate);
             }
         });
+    }
+
+    testoutput() {
+        console.log('output nay');
+        this.myEvent.emit();
     }
 }

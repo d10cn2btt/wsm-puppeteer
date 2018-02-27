@@ -115,6 +115,8 @@ module.exports.submitFormRequest = async function (req) {
         await page.waitFor(500);
         await page.keyboard.press('Tab');
         await page.waitFor(500);
+        await page.type('#request_leave_compensation_attributes_compensation_from', params.compensation_date);
+        await page.waitFor(500);
         // check valid time
         let timeInvalid = await page.waitForSelector('.showSweetAlert', {timeout: 500})
             .then(async function (e) {
