@@ -12,8 +12,11 @@ We use this in the ngSubmit event where we send the value of the form via form.v
         <input type="password" class="form-control" id="password" placeholder="Password" [formControl]="loginForm.controls['password']">
         <span *ngIf="checkError('password', 'minlength')" class="help-block">Min length 6.</span>
     </div>
-    <div class="checkbox"><label><input type="checkbox"> Remember me</label></div>
+    <div class="checkbox"><label><input type="checkbox" [formControl]="loginForm.controls['save_info']"> Remember me</label></div>
     <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
 </form>
 
 <list-date [listDate]="listDate" [userInfo]="userInfo" *ngIf="listDate" (myEvent)="batoutput()"></list-date>
+
+{{loginForm.value | json}}
+{{userInfo | json}}

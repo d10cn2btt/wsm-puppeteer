@@ -9,10 +9,12 @@ import {BsDropdownModule} from 'ngx-bootstrap';
 
 import {AppRoutingModule} from './app-routing.module';
 
-import {AppComponent} from './app.component';
-import {LoginFormComponent} from './login-form/login-form.component';
 import {ApiService} from './service/api.service';
 import {MessageService} from './service/message.service';
+import {StorageService} from './service/storage.service';
+
+import {AppComponent} from './app.component';
+import {LoginFormComponent} from './login-form/login-form.component';
 import {ListDateComponent} from './list-date/list-date.component';
 import {PageNotFoundComponent} from './not-found.component';
 import {LoadingComponent} from './loading/loading.component';
@@ -39,7 +41,7 @@ import {PopupComponent} from './popup/popup.component';
         TabsModule.forRoot(),
         BsDropdownModule.forRoot(),
     ],
-    providers: [ApiService, MessageService],
+    providers: [ApiService, MessageService, StorageService],
     bootstrap: [AppComponent],
     entryComponents: [
         PopupComponent
