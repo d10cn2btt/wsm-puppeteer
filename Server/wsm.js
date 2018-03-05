@@ -43,7 +43,7 @@ module.exports.checkDate = async function (email, password) {
         resContent.message = error.message;
     }
 
-    browser.close();
+    await browser.close();
     return {
         "status_code": statusCode,
         "res_content": resContent
@@ -70,7 +70,7 @@ async function detechDate(page) {
 }
 
 async function loginWSM(email, password) {
-    browser = await puppeteer.launch({headless: false});
+    browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
     page.setViewport({width: 1280, height: 720});
     await page.goto(URL_TIMESHEET);
@@ -165,7 +165,7 @@ module.exports.submitFormRequest = async function (req) {
         resContent.message = error.message;
     }
 
-    browser.close();
+    await browser.close();
     return {
         "status_code": statusCode,
         "res_content": resContent

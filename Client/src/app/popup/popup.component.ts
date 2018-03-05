@@ -9,7 +9,7 @@ import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 export class PopupComponent implements OnInit {
     title: string;
     closeBtnName: string;
-    list: string[];
+    list: string;
 
     constructor(public bsModalRef: BsModalRef) {}
 

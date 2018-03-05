@@ -5,9 +5,9 @@
     </button>
 </div>
 <div class="modal-body">
-    <ul *ngIf="list.length">
-        <li *ngFor="let item of list">
-            <p [innerHTML]="item"></p>
+    <ul *ngIf="list">
+        <li>
+            <p [innerHTML]="list"></p>
         </li>
     </ul>
 </div>

@@ -12,17 +12,13 @@ export class MessageService {
     constructor(public modalService: BsModalService) {
     }
 
-    add(message: string) {
-        this.messages.push(message);
-        this.openModalWithComponent(['zxcvzxcv', 'zxcvzxcv'])
-    }
+    openModalWithComponent(content, title = 'Error') {
+        if (typeof content == "undefined") {
+            content = "Can't access WSM or Server has a problem. Pls try later or contact with ADMIN";
+        } else {
+            content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+        }
 
-    clear() {
-        this.messages = [];
-    }
-
-    openModalWithComponent(content: Array<String>, title = 'Error') {
-        content[0] = content[0].replace(/(?:\r\n|\r|\n)/g, '<br />');
         let initialState = {
             list: content,
             title: title,

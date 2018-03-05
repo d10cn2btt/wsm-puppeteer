@@ -65,9 +65,9 @@ export class ListDateComponent implements OnInit {
     }
 
     ngOnInit() {
-        // if (this.listDate.day_IL == "" && this.listDate.day_LE == "") {
-        //     this.messageService.openModalWithComponent(["You worked very hard !"], "Congratulation");
-        // }
+        if (this.listDate.day_IL.length == 0 && this.listDate.day_LE.length == 0) {
+            this.messageService.openModalWithComponent(["You worked very hard !"], "Congratulation");
+        }
     }
 
     selectDate(date, type) {
@@ -119,11 +119,12 @@ export class ListDateComponent implements OnInit {
             } else {
                 this.listDate.day_LE = this.listDate.day_LE.filter(e => e != this.currentDate);
             }
+
+            this.currentDate = "";
         });
     }
 
-    testoutput() {
-        console.log('output nay');
+    logout() {
         this.myEvent.emit();
     }
 }

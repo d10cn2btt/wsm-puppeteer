@@ -22,23 +22,22 @@ export class LoginFormComponent implements OnInit {
     bsModalRef: BsModalRef;
     loginForm: FormGroup;
     listDate: Object;
-    userInfo: Object;
+    userInfo = {
+        'email': '',
+        'password': '',
+        'save_info': false,
+    };
 
     constructor(fb: FormBuilder, private apiService: ApiService, public router: Router, private storage: StorageService) {
-        this.storage.get('user_info', (data) => {
-            // this.title = '22222222222222222';
-            this.userInfo = data;
-        });
+        if (localStorage.user_info) {
+            this.userInfo = JSON.parse(localStorage.user_info);
+        }
 
         this.loginForm = fb.group({
-            'email': ['', Validators.email],
-            'password': ['', Validators.minLength(6)],
-            'save_info': [false]
+            'email': [this.userInfo.email, Validators.email],
+            'password': [this.userInfo.password, Validators.minLength(6)],
+            'save_info': [this.userInfo.save_info]
         });
-
-        this.loginForm.value.email = '13123';
-
-        // this.performLogin({'email': "bui.tuan.truong@framgia.com", 'password': "truong123"})
     }
 
     ngOnInit() {
@@ -48,10 +47,9 @@ export class LoginFormComponent implements OnInit {
         this.apiService.performLogin(value).subscribe(response => {
             this.listDate = response;
             this.userInfo = value;
-
-            this.storage.set({
-                'user_info': value
-            })
+            if (value.save_info) {
+                localStorage.user_info = JSON.stringify(value);
+            }
         });
     }
 
@@ -59,7 +57,7 @@ export class LoginFormComponent implements OnInit {
         return this.loginForm.controls[field].hasError(errorCode) && this.loginForm.controls[field].touched;
     }
 
-    batoutput() {
+    logout() {
         this.listDate = "";
         this.router.navigate(['/']);
     }
