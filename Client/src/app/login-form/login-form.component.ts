@@ -6,7 +6,6 @@ import {Router} from '@angular/router';
 
 import {slideInDownAnimation} from '../animations';
 import {ApiService} from '../service/api.service';
-import {StorageService} from '../service/storage.service';
 
 @Component({
     selector: 'login-form',
@@ -28,7 +27,7 @@ export class LoginFormComponent implements OnInit {
         'save_info': false,
     };
 
-    constructor(fb: FormBuilder, private apiService: ApiService, public router: Router, private storage: StorageService) {
+    constructor(fb: FormBuilder, private apiService: ApiService, public router: Router) {
         if (localStorage.user_info) {
             this.userInfo = JSON.parse(localStorage.user_info);
         }

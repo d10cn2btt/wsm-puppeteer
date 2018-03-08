@@ -111,7 +111,7 @@ export class ListDateComponent implements OnInit {
 
         this.apiService.submitRequest(formData).subscribe((response: any) => {
             this.messageService.openModalWithComponent([
-                "Check request  <a href='" + response.url_edit + "'>here</a>"
+                "Check request  <a target='_blank' href='" + response.url_edit + "'>here</a>"
             ], "Submit request successfully");
 
             if (this.typeRequest == this.TYPE_REQUEST_IL) {

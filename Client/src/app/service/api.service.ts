@@ -18,7 +18,7 @@ const httpOptions = {
 export class ApiService {
     private DOMAIN = 'https://test-puppeteer-d10cn2btt.c9users.io:8080/';
     // private DOMAIN = 'http://127.0.0.1:3000/';
-    private URL_CHECK_DATE = this.DOMAIN + 'take_IL1';
+    private URL_CHECK_DATE = this.DOMAIN + 'check_il_le';
     private URL_SUBMIT_REQUEST = this.DOMAIN + 'submit_form_request';
     // private URL_CHECK_DATE = 'https://jsonplaceholder.typicode.com/posts';
     bsModalRef: BsModalRef;

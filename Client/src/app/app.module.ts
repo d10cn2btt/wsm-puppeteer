@@ -11,7 +11,6 @@ import {AppRoutingModule} from './app-routing.module';
 
 import {ApiService} from './service/api.service';
 import {MessageService} from './service/message.service';
-import {StorageService} from './service/storage.service';
 
 import {AppComponent} from './app.component';
 import {LoginFormComponent} from './login-form/login-form.component';
@@ -41,7 +40,7 @@ import {PopupComponent} from './popup/popup.component';
         TabsModule.forRoot(),
         BsDropdownModule.forRoot(),
     ],
-    providers: [ApiService, MessageService, StorageService],
+    providers: [ApiService, MessageService],
     bootstrap: [AppComponent],
     entryComponents: [
         PopupComponent

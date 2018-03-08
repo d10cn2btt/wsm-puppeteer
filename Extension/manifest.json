@@ -1,15 +1,26 @@
 {
   "manifest_version": 2,
-
-  "name": "test ng 2",
-  "description": "This extension allows the user to change the background color of the current page.",
+  "name": "Check IL LE on WSM",
+  "description": "This extension will check time IL/LE in WSM. It's auto run 1 time per day at 12:00 PM",
   "version": "1.0",
-
   "browser_action": {
+    "default_icon": "assets/img/favicon.png",
     "default_popup": "index.html"
   },
   "permissions": [
     "activeTab",
-    "storage"
-  ]
+    "storage",
+    "https://test-puppeteer-d10cn2btt.c9users.io:8080/check_il_le",
+    "webNavigation"
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "moment.min.js",
+      "background.js"
+    ]
+  },
+  "icons": {
+    "48": "assets/img/favicon.png"
+  }
 }
